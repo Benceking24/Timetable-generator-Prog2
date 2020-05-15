@@ -1,0 +1,24 @@
+﻿  Lesson.cpp
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\Lesson.cpp(2,1): error C2504: 'Public': base class undefined
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\Lesson.h(11,24): error C2146: syntax error: missing ',' before identifier 'Lesson'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\Lesson.cpp(2,1): fatal error C1004: unexpected end-of-file found
+  TimetableGenerator.cpp
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(5,1): error C2504: 'Public': base class undefined
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\Lesson.h(11,24): error C2146: syntax error: missing ',' before identifier 'Lesson'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(5,7): error C2143: syntax error: missing ',' before 'using namespace'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(8,14): error C2059: syntax error: 'string'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(9,14): error C2059: syntax error: 'string'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(10,14): error C2059: syntax error: 'string'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(11,7): error C2143: syntax error: missing ';' before '<<'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(11,7): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(11,13): error C2238: unexpected token(s) preceding ';'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(12,7): error C2143: syntax error: missing ';' before '<<'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(12,7): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(12,13): error C2238: unexpected token(s) preceding ';'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(13,7): error C2143: syntax error: missing ';' before '<<'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(13,7): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(13,13): error C2238: unexpected token(s) preceding ';'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(15,2): error C2059: syntax error: 'return'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(15,10): error C2238: unexpected token(s) preceding ';'
+C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\TimetableGenerator\TimetableGenerator.cpp(17,1): fatal error C1004: unexpected end-of-file found
+  Generating Code...
