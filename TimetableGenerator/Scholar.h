@@ -1,8 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
-
-enum AcademicRank { AssistantLecturer, Lecturer, Professor };
+#include "Helper.hpp"
 
 static unsigned int NextScholarId= 0;
 
@@ -12,21 +11,17 @@ class Scholar
 {
 protected:
 	const unsigned int id;
-	char* name;
+	string name;
 	int salary;
 	int rank;
 public:
-	Scholar(const char* Name, int Rank, int Salary);
-	~Scholar();
+	Scholar(string Name, int Rank, int Salary);
 	unsigned int getId() const;
 	int getSalary() const;
-	char* getName() const;
+	string getName() const;
 	int getRank() const;
-	const char* getRankByName() const;
 	void setSalary(const int Salary);
-	void setName(const char* Name);
+	void setName(string Name);
 	void setRank(int Rank);
-	friend ostream& operator<<(ostream& os, const Scholar& person);
+	friend ostream& operator<< (ostream& os, Scholar& teacher);
 };
-
-ostream& operator<<(ostream& os, const Scholar& person);

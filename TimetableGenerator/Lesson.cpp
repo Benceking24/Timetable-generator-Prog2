@@ -1,13 +1,34 @@
-#define _CRT_SECURE_NO_WARNINGS 1 
 #include "Lesson.h"
 
-Lesson::Lesson(const char* Name, const char* Building, const char* Level, const char* Room, unsigned int CountPerWeek, int MinQualification) :id(NextLessonId), countPerWeek(CountPerWeek), minQualification(MinQualification), heldPerWeek(0)
+Lesson::Lesson(const string& Name, const string& Building, const string& Level, const string& Room, unsigned int CountPerWeek, int MinQualification) :id(NextLessonId), countPerWeek(CountPerWeek), minQualification(MinQualification), heldPerWeek(0),name(Name),location({Building,Level,Room})
 {
 	NextLessonId++;
-	Location Tlocation = {Building, Level, Room};
-	location = Tlocation;
-	name = new char[sizeof(Name)];
-	strcpy(name, Name);
 }
 
-//return os << lesson.id << ";" << lesson.name <<";" << lesson.location <<";"<< lesson.minQualification<< ";" << lesson.countPerWeek <<";" <<lesson.heldPerWeek << ";" << lesson.teacher << endl;
+const unsigned int Lesson::getId() const {return id;}
+
+string Lesson::getName() const {return name;}
+
+Location Lesson::getLocation() const {return location;}
+
+unsigned int Lesson::getCountPerWeek() const { return countPerWeek; }
+
+unsigned int Lesson::getHeldPerWeek() const { return heldPerWeek; }
+
+int Lesson::getMinQualification() const { return minQualification; }
+
+bool Lesson::incrementHeldPerWeek() { //TO-DO Exception handling 
+	if (heldPerWeek < countPerWeek) {
+		heldPerWeek++;
+		return true;
+	}
+	return false;
+}
+
+ostream& operator<< (ostream& os, Lesson& lesson)
+{
+	string temp; //used for location
+				 //TO-DO better solution?
+	return os << "Lesson: "<< "Id: " << lesson.getId() << "\t Name: " << lesson.getName() <<"\t Location: " << LocationToString(temp, lesson.getLocation()) <<"\t Minimum Qualification: "<< AcadaemicRankByName(lesson.getMinQualification()) << "\t Count per week: " << lesson.getCountPerWeek() <<"\t Held per week: " <<lesson.getHeldPerWeek() << endl;
+}
+

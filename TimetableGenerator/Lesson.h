@@ -1,42 +1,42 @@
 #pragma once
 #include <iostream>
 #include <string>
-
-
-struct Location
-{
-	const char* building;
-	const char* level;
-	const char* room;
-};
-
-static unsigned int NextLessonId = 0;
+#include "Helper.hpp"
 
 using namespace std;
+static unsigned int NextLessonId = 0;
 
 class Lesson 
 {
 protected:
 	const unsigned int id;
-	char* name;
+	string name;
 	Location location;
 	unsigned int countPerWeek;
 	unsigned int heldPerWeek; //count of actual lessons in timetable
 	//T* teacher;
 	int minQualification;
 public:
-	Lesson(const char* Name, const char* Building, const char* Level, const char* Room, unsigned int CountPerWeek, int MinQualification);
+	Lesson(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification);
+	const unsigned int getId() const;
+	string getName() const;
+	Location getLocation() const;
+	unsigned int getCountPerWeek() const;
+	unsigned int getHeldPerWeek() const;
+	int getMinQualification() const;
+	bool incrementHeldPerWeek();
+	friend ostream& operator<< (ostream& os, Lesson& leacher);
 };
 
-/*
-class Lecture : public Lesson<class T> {
+
+class Lecture : public Lesson {
 	Lecture();
 };
 
-class Practice : public Lesson<class T> {
+class Practice : public Lesson {
 
 };
 
-class Laboratory : public Lesson<class T> {
+class Laboratory : public Lesson {
 
-};*/
+};
