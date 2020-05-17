@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS 1 
 #include "Scholar.h"
 
-Scholar::Scholar(const char* Name, AcademicRank Rank, int Salary):id(NextScholarId),salary(Salary),rank(Rank)
+Scholar::Scholar(const char* Name, int Rank, int Salary):id(NextScholarId),salary(Salary),rank(Rank)
 {
 	NextScholarId++;
 	setName(Name);
@@ -30,7 +30,7 @@ char* Scholar::getName() const
 	return name;
 }
 
-AcademicRank Scholar::getRank() const
+int Scholar::getRank() const
 {
 	return rank;
 }
@@ -51,6 +51,7 @@ const char* Scholar::getRankByName() const
 	default:
 		break;
 	}
+	return nullptr;
 }
 
 void Scholar::setSalary(const int Salary) {salary = Salary;}
@@ -65,7 +66,7 @@ void Scholar::setName(const char* Name)
 	strcpy(name, Name);
 }
 
-void Scholar::setRank(AcademicRank Rank) {rank = Rank;}
+void Scholar::setRank(int Rank) {rank = Rank;}
 
 ostream& operator<<(ostream& os, const Scholar& person)
 {

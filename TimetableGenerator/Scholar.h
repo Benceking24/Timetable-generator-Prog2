@@ -2,11 +2,11 @@
 #include <iostream>
 #include <string>
 
+enum AcademicRank { AssistantLecturer, Lecturer, Professor };
+
 static unsigned int NextScholarId= 0;
 
 using namespace std;
-
-enum AcademicRank {AssistantLecturer, Lecturer, Professor};
 
 class Scholar
 {
@@ -14,18 +14,18 @@ protected:
 	const unsigned int id;
 	char* name;
 	int salary;
-	AcademicRank rank;
+	int rank;
 public:
-	Scholar(const char* Name, AcademicRank Rank, int Salary);
+	Scholar(const char* Name, int Rank, int Salary);
 	~Scholar();
 	unsigned int getId() const;
 	int getSalary() const;
 	char* getName() const;
-	AcademicRank getRank() const;
+	int getRank() const;
 	const char* getRankByName() const;
 	void setSalary(const int Salary);
 	void setName(const char* Name);
-	void setRank(AcademicRank Rank);
+	void setRank(int Rank);
 	friend ostream& operator<<(ostream& os, const Scholar& person);
 };
 
