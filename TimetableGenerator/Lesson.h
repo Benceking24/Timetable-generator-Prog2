@@ -14,42 +14,37 @@ protected:
 	Location location;
 	unsigned int countPerWeek;
 	unsigned int heldPerWeek; //count of actual lessons in timetable
+	int minQualification;
 	//T* teacher;
 public:
-	Lesson(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek); //TO-DO: default values
+	Lesson(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification); //TO-DO: default values
 	const unsigned int getId() const;
 	string getName() const;
 	Location getLocation() const;
 	unsigned int getCountPerWeek() const;
 	unsigned int getHeldPerWeek() const;
 	bool incrementHeldPerWeek();
-	//virtual int getMinQualification() const = 0;
+	int getMinQualification() const;
+	virtual void print(ostream& os)=0;
 };
 
 
 class Lecture : public Lesson {
-private:
-	int minQualification;
 public:
-	Lecture(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification); //TO-DO: default values
-	int getMinQualification() const;
-	friend ostream& operator<< (ostream& os, Lecture& lesson); //TO-DO: Nem jobb az hogy van egy print függvény Lesson-re és ilyenkor azt hívja meg elejére odaírva az altípust?
+	Lecture(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification = Professor); //TO-DO: default values
+	void print(ostream& os); //TO-DO: Nem jobb az hogy van egy print függvény Lesson-re és ilyenkor azt hívja meg elejére odaírva az altípust?
 };
 
 class Practice : public Lesson {
-private:
-	int minQualification;
+
 public:
-	Practice(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification); //TO-DO: default values
-	int getMinQualification() const;
-	friend ostream& operator<< (ostream& os, Practice& lesson);
+	Practice(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification = AssistantLecturer); //TO-DO: default values
+	void print(ostream& os);
 };
 
 class Laboratory : public Lesson {
-private:
-	int minQualification;
+
 public:
-	Laboratory(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification); //TO-DO: default values
-	int getMinQualification() const;
-	friend ostream& operator<< (ostream& os, Laboratory& lesson);
+	Laboratory(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification = Lecturer); //TO-DO: default values
+	void print(ostream& os);
 };
