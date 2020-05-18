@@ -16,17 +16,27 @@ using namespace std;
 
 int main() {
 	{
-	Scholar teacher = Scholar("Kis", Professor, 20);
-	vector<Lesson*> Lessons;
-	Lessons.push_back(new Lecture("Fizika", "F", "1", "201", 5));
-	Lessons.push_back(new Practice("Fizika", "F", "1", "201", 5));
-	Lessons.push_back(new Laboratory("Fizika", "F", "1", "201", 5));
-	for (int i = 0; i < Lessons.size(); i++)
+
+	//Setting the size of matrix
+	const int daysPerWeek = 1;
+	const int lessonsPerDay = 3;
+
+	vector<vector<Lesson*>> Lessons;
+
+	vector<Lesson*> dayOne;
+	dayOne.push_back(new Lecture("Fizika", "F", "1", "201", 5));
+	dayOne.push_back(new Practice("Fizika", "F", "1", "201", 5));
+	dayOne.push_back(new Laboratory("Fizika", "F", "1", "201", 5));
+	Lessons.push_back(dayOne);
+
+	for (int i = 0; i < Lessons[0].size(); i++)
 	{
-		Lessons[i]->print(cout);
-		delete Lessons[i];
+		Lessons[0][i]->print(cout);
+		delete Lessons[0][i];
 	}
 	Lessons.clear();
+
+	Scholar teacher = Scholar("Kis", Professor, 20);
 	cout << teacher;
 	}
 	//_CrtDumpMemoryLeaks(); //Memory leak
