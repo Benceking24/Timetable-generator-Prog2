@@ -21,5 +21,5 @@ void Scholar::setRank(int Rank) {rank = Rank;} //TO-DO: Exception handling
 
 ostream& operator<< (ostream& os, Scholar& teacher)
 {
-	return os <<"Teacher: "<< "Id: "<< teacher.getId() << "\t Name: " << teacher.getName() << "\t Rank: " << AcadaemicRankByName(teacher.getRank()) << "\t Salary: " << teacher.getSalary() << endl;
+	return os <<"Teacher:\tId: "<< teacher.getId() << "\t Name: " << teacher.getName() << "\t Rank: " << AcadaemicRankByName(teacher.getRank()) << "\t Salary: " << teacher.getSalary() << endl;
 }
