@@ -1,2 +1,6 @@
-﻿  TimetableGenerator.cpp
+﻿  Lesson.cpp
+  Scholar.cpp
+  Timetable.cpp
+  TimetableGenerator.cpp
+  Generating Code...
   TimetableGenerator.vcxproj -> C:\Users\Fabian Bence\Documents\GitHub\Timetable-generator-Prog2\x64\Debug\TimetableGenerator.exe

@@ -6,6 +6,8 @@ using namespace std;
 
 enum AcademicRank { AssistantLecturer, Lecturer, Professor };
 
+enum DaysOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday };
+
 struct Location
 {
 	string building;
@@ -13,7 +15,7 @@ struct Location
 	string room;
 };
 
-static const char* AcadaemicRankByName(int rank) {
+static string AcadaemicRankByName(int rank) {
 	switch (rank)
 	{
 	case AssistantLecturer:
@@ -24,6 +26,36 @@ static const char* AcadaemicRankByName(int rank) {
 		break;
 	case Professor:
 		return "Professor";
+		break;
+	default:
+		break;
+	}
+	return nullptr;
+}
+
+static string DaysOfWeek(int nthDay) {
+	switch (nthDay)
+	{
+	case Monday:
+		return "Mond";
+		break;
+	case Tuesday:
+		return "Tues";
+		break;
+	case Wednesday:
+		return "Wedn";
+		break;
+	case Thursday:
+		return "Thur";
+		break;
+	case Friday:
+		return "Frid";
+		break;
+	case Saturday:
+		return "Satu";
+		break;
+	case Sunday:
+		return "Sund";
 		break;
 	default:
 		break;

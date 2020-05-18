@@ -4,18 +4,29 @@
 #include <crtdbg.h>
 */
 
-#include <iostream>
 #include "Helper.hpp" // Includes Academic ranks enum and backward conversion (AssistantLecturer, Lecturer, Professor)
 #include "Scholar.h"
 #include "Lesson.h"
-#include <vector>
+#include "Timetable.h"
 
 //TO-DO: Intelisense comments
 
 using namespace std;
 
 int main() {
-	{
+	Timetable v1 = Timetable(5, 3);
+	vector<Lesson*> dayOne;
+	dayOne.push_back(new Lecture("Fizika", "F", "1", "201", 5));
+	dayOne.push_back(new Practice("Fizika", "F", "1", "201", 5));
+	dayOne.push_back(new Laboratory("Fizika", "F", "1", "201", 5));
+	v1.addDay(dayOne);
+	v1.addDay(dayOne);
+	v1.addDay(dayOne);
+	v1.addDay(dayOne);
+	v1.addDay(dayOne);
+	v1.addDay(dayOne);
+	v1.print(cout);
+	/*{
 
 	//Setting the size of matrix
 	const int daysPerWeek = 1;
@@ -38,7 +49,7 @@ int main() {
 
 	Scholar teacher = Scholar("Kis", Professor, 20);
 	cout << teacher;
-	}
+	}*/
 	//_CrtDumpMemoryLeaks(); //Memory leak
 	return 0;
 }
