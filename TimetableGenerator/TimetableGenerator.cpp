@@ -14,6 +14,7 @@
 using namespace std;
 
 int main() {
+	int numberOfVariations = 0;
 	Timetable v1 = Timetable(5, 3);
 	vector<Lesson*> dayOne;
 	dayOne.push_back(new Lecture("Fizika", "F", "1", "201", 5));

@@ -144,6 +144,7 @@
     <ClCompile Include="TimetableGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Generator.hpp" />
     <ClInclude Include="Helper.hpp" />
     <ClInclude Include="Lesson.h" />
     <ClInclude Include="Scholar.h" />

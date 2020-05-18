@@ -3,6 +3,11 @@
 Lesson::Lesson(const string& Name, const string& Building, const string& Level, const string& Room, unsigned int CountPerWeek, const int MinQualification) :id(NextLessonId), countPerWeek(CountPerWeek), heldPerWeek(0),name(Name),location({Building,Level,Room}), minQualification(MinQualification)
 { NextLessonId++; }
 
+Lesson::~Lesson()
+{
+	specificTimes.clear();
+}
+
 const unsigned int Lesson::getId() const {return id;}
 
 string Lesson::getName() const {return name;}
@@ -14,6 +19,12 @@ unsigned int Lesson::getCountPerWeek() const { return countPerWeek; }
 unsigned int Lesson::getHeldPerWeek() const { return heldPerWeek; }
 
 int Lesson::getMinQualification() const { return minQualification; }
+
+bool Lesson::addSpecificTime(const timeSlot& time)
+{
+	specificTimes.push_back(time);
+	return true; //TO-DO Exception handling
+}
 
 bool Lesson::incrementHeldPerWeek() { //TO-DO Exception handling 
 	if (heldPerWeek < countPerWeek) {

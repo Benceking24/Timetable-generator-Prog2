@@ -15,6 +15,11 @@ struct Location
 	string room;
 };
 
+struct timeSlot {
+	int Day;
+	int Slot;
+};
+
 static string AcadaemicRankByName(int rank) {
 	switch (rank)
 	{

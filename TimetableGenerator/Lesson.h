@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <vector>
 #include "Helper.hpp"
 
 using namespace std;
@@ -15,9 +16,11 @@ protected:
 	unsigned int countPerWeek;
 	unsigned int heldPerWeek; //count of actual lessons in timetable
 	int minQualification;
+	vector<timeSlot> specificTimes;
 	//T* teacher;
 public:
 	Lesson(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification); //TO-DO: default values
+	~Lesson();
 	const unsigned int getId() const;
 	string getName() const;
 	Location getLocation() const;
@@ -25,6 +28,7 @@ public:
 	unsigned int getHeldPerWeek() const;
 	bool incrementHeldPerWeek();
 	int getMinQualification() const;
+	bool addSpecificTime(const timeSlot& time);
 	virtual void print(ostream& os)=0;
 };
 
