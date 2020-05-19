@@ -1,0 +1,4 @@
+0 Fizika F 1 202 3 0 1
+0 Fizika F 1 202 5 
+1 Matek H 3 45 4
+2 Tesi EL 1 2 1

@@ -4,6 +4,8 @@
 
 using namespace std;
 
+enum LessonTypes {practice, laboratory, lecture};
+
 enum AcademicRank { AssistantLecturer, Lecturer, Professor };
 
 enum DaysOfWeek { Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday };
@@ -15,7 +17,7 @@ struct Location
 	string room;
 };
 
-struct timeSlot {
+struct TimeSlot {
 	int Day;
 	int Slot;
 };

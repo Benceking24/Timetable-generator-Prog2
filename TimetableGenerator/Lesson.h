@@ -16,7 +16,7 @@ protected:
 	unsigned int countPerWeek;
 	unsigned int heldPerWeek; //count of actual lessons in timetable
 	int minQualification;
-	vector<timeSlot> specificTimes;
+	vector<TimeSlot> specificTimes;
 	//T* teacher;
 public:
 	Lesson(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification); //TO-DO: default values
@@ -26,9 +26,11 @@ public:
 	Location getLocation() const;
 	unsigned int getCountPerWeek() const;
 	unsigned int getHeldPerWeek() const;
+	void addCountPerWeek(int);
 	bool incrementHeldPerWeek();
 	int getMinQualification() const;
-	bool addSpecificTime(const timeSlot& time);
+	vector<TimeSlot> getSpecificTimes() const;
+	bool addSpecificTime(const TimeSlot& time);
 	virtual void print(ostream& os)=0;
 };
 

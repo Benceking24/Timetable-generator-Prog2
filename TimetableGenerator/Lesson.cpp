@@ -1,7 +1,7 @@
 #include "Lesson.h"
 
 Lesson::Lesson(const string& Name, const string& Building, const string& Level, const string& Room, unsigned int CountPerWeek, const int MinQualification) :id(NextLessonId), countPerWeek(CountPerWeek), heldPerWeek(0),name(Name),location({Building,Level,Room}), minQualification(MinQualification)
-{ NextLessonId++; }
+{ 	NextLessonId++; }
 
 Lesson::~Lesson()
 {
@@ -20,15 +20,22 @@ unsigned int Lesson::getHeldPerWeek() const { return heldPerWeek; }
 
 int Lesson::getMinQualification() const { return minQualification; }
 
-bool Lesson::addSpecificTime(const timeSlot& time)
+vector<TimeSlot> Lesson::getSpecificTimes() const
+{
+	return specificTimes;
+}
+
+bool Lesson::addSpecificTime(const TimeSlot& time)
 {
 	specificTimes.push_back(time);
 	return true; //TO-DO Exception handling
 }
 
+void Lesson::addCountPerWeek(int amount) { countPerWeek += amount; }
+
 bool Lesson::incrementHeldPerWeek() { //TO-DO Exception handling 
 	if (heldPerWeek < countPerWeek) {
-		heldPerWeek++;
+		heldPerWeek ++;
 		return true;
 	}
 	return false;
