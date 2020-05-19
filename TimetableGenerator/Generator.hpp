@@ -11,7 +11,21 @@ using namespace std;
 //Ora nev, max ora szam				-standard
 //Ora nev, max ora szam, idopont	-special
 
-bool ReadLessons(const string& file, vector<Lesson*>& lessons) {
+int GenerateHash(const vector<Lesson*>& lessons) {
+	// Hozzáadja karakteresen az ID értékét egy inthez és azt pusholja a hashes-be
+	stringstream ss;
+	for (int i = 0; i < lessons.size(); i++)
+	{
+		ss << lessons[i]->getId();
+	}
+
+	int temp;
+	ss >> temp;
+	return temp;
+}
+
+
+bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<int>& hashes) {
 	// 1. Beolvassa adott streamet végjelig
 	// 2. Ha még nem volt ilyen tárgy létrehozza az output-ra
 	//	  Ha már volt akkor hozzáad egy countot és/vagy specific timeot
@@ -65,35 +79,63 @@ bool ReadLessons(const string& file, vector<Lesson*>& lessons) {
 			lessons.push_back(temp);
 		}
 	}
+	hashes.push_back(GenerateHash(lessons));
+
 	return true;
 }
 
-bool GenerateTimetable(const vector<Lesson*>& standard, const vector<Lesson*>& special, Timetable output) {
+bool GenerateTimetable(const vector<Lesson*>& standard, const vector<Lesson*>& special, Timetable& output, int days, int timeslots) {
 	// 1. Ciklus minden napra egy temp vector<lesson> be
 	// 1.1 Megnézi van-e arra a napra speciális, ha igen azt jelzi egy !ÚJ! temp listába
 	// 1.2 Elkezdi feltölteni standard elemekkel amíg a temp listába nem fut idõ szerint bele
 	//	   Ha belefut beteszi a spéci elemet és folytatja tovább
 	// 1.3 Végén hozzáadja az outputhoz a temp vector <lesson-t>
 
+	for (int i = 0; i < days; i++)
+	{
+		vector<Lesson*> temp;
+		int importantSlot=-1;
+		Lesson* importatntlesson = nullptr;
+		for (int j = 0; j < special.size(); j++)
+		{
+			for (int k = 0; k < special[j]->getSpecificTimes().size(); k++)
+			{
+				if (special[j]->getSpecificTimes()[k].Day==i)
+				{
+					importantSlot = special[j]->getSpecificTimes()[k].Slot;
+					importatntlesson = special[j];
+				}
+			}
+		}
+		for (int j= 0; j < timeslots; j++)
+		{
+			if (importantSlot!=j)
+			{
+				for (int k = 0; k < standard.size(); k++)
+				{
+					if (standard[k]->getCountPerWeek()> standard[k]->getHeldPerWeek())
+					{
+						temp.push_back(standard[k]);
+						standard[k]->incrementHeldPerWeek();
+						break;
+					}
+				}
+			}
+			else
+			{
+				if (importatntlesson->getCountPerWeek()>importatntlesson->getHeldPerWeek())
+				{
+					temp.push_back(importatntlesson);
+					importatntlesson->incrementHeldPerWeek();
+				}
+			}
+		}
+		output.addDay(temp);
+	}
 
 	return true;
 }
 
-void GenerateHash(const vector<Lesson*>& standardLessons, const vector<Lesson*>& specialLessons, vector<int>& hashes) {
-	// Hozzáadja karakteresen az ID értékét egy inthez és azt pusholja a hashes-be
-	stringstream ss;
-	for (int i = 0; i < standardLessons.size(); i++)
-	{
-		ss<<standardLessons[i]->getId();
-	}
-	for (int i = 0; i < specialLessons.size(); i++)
-	{
-		ss << specialLessons[i]->getId();
-	}
-	int temp;
-	ss >> temp;
-	hashes.push_back(temp);
-}
 
 void RandomizeOrder(vector<Lesson*>& standard, vector<Lesson*>& special, vector<int>& hashes) {
 	// Megcserél egy tetszõleges elemet egy tetszõlegssel ami nem önamaga

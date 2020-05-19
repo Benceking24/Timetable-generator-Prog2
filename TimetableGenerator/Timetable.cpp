@@ -4,14 +4,6 @@ Timetable::Timetable(const int Days, const int Lessons):id(NextTimetableId), day
 
 Timetable::~Timetable()
 {
-	for (int day = 0; day < daysPerWeek; day++)
-	{
-		for (int slot = 0; slot < lessonsPerDay; slot++)
-		{
-			delete Lessons[day][slot];
-		}
-	}
-	Lessons.clear();
 
 }
 
