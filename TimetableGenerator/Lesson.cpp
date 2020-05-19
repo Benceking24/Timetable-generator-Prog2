@@ -12,6 +12,14 @@ const unsigned int Lesson::getId() const {return id;}
 
 string Lesson::getName() const {return name;}
 
+string Lesson::getLongName() const
+{
+	stringstream ss;
+	string temp = typeid(*this).name();
+	ss << name<<" "<< temp.substr(6, temp.length());
+	return ss.str();
+}
+
 Location Lesson::getLocation() const {return location;}
 
 unsigned int Lesson::getCountPerWeek() const { return countPerWeek; }
@@ -39,6 +47,11 @@ bool Lesson::incrementHeldPerWeek() { //TO-DO Exception handling
 		return true;
 	}
 	return false;
+}
+
+void Lesson::resetHeldPerWeek()
+{
+	heldPerWeek = 0;
 }
 
 Lecture::Lecture(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification) :Lesson(Name, Building, Level, Room, CountPerWeek, MinQualification) {}

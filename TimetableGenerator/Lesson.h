@@ -23,11 +23,13 @@ public:
 	~Lesson();
 	const unsigned int getId() const;
 	string getName() const;
+	string getLongName() const;
 	Location getLocation() const;
 	unsigned int getCountPerWeek() const;
 	unsigned int getHeldPerWeek() const;
 	void addCountPerWeek(int);
 	bool incrementHeldPerWeek();
+	void resetHeldPerWeek();
 	int getMinQualification() const;
 	vector<TimeSlot> getSpecificTimes() const;
 	bool addSpecificTime(const TimeSlot& time);

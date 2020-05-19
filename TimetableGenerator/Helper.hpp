@@ -17,6 +17,7 @@ struct Location
 	string room;
 };
 
+
 struct TimeSlot {
 	int Day;
 	int Slot;
@@ -44,25 +45,25 @@ static string DaysOfWeek(int nthDay) {
 	switch (nthDay)
 	{
 	case Monday:
-		return "Mond";
+		return "Monday";
 		break;
 	case Tuesday:
-		return "Tues";
+		return "Tuesday";
 		break;
 	case Wednesday:
-		return "Wedn";
+		return "Wednesday";
 		break;
 	case Thursday:
-		return "Thur";
+		return "Thursday";
 		break;
 	case Friday:
-		return "Frid";
+		return "Friday";
 		break;
 	case Saturday:
-		return "Satu";
+		return "Saturday";
 		break;
 	case Sunday:
-		return "Sund";
+		return "Sunday";
 		break;
 	default:
 		break;

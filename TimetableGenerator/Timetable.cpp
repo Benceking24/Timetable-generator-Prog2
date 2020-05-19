@@ -25,7 +25,7 @@ void Timetable::print(ostream& os)
 	os << "\t";
 	for (int day = 0; day < daysPerWeek; day++)
 	{
-		os << DaysOfWeek(day) << "\t";
+		os << DaysOfWeek(day) << "\t\t\t\t";
 	}
 	os << endl;
 
@@ -35,7 +35,7 @@ void Timetable::print(ostream& os)
 		os << slot+1 << ".\t";
 		for (int day = 0; day < daysPerWeek; day++)
 		{
-			os << Lessons[day][slot]->getName() <<"\t";
+			os << Lessons[day][slot]->getLongName()<<"\t\t\t";
 		}
 		os << endl;
 	}

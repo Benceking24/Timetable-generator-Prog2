@@ -11,7 +11,7 @@ using namespace std;
 //Ora nev, max ora szam				-standard
 //Ora nev, max ora szam, idopont	-special
 
-int GenerateHash(const vector<Lesson*>& lessons) {
+string GenerateHash(const vector<Lesson*>& lessons) {
 	// Hozzáadja karakteresen az ID értékét egy inthez és azt pusholja a hashes-be
 	stringstream ss;
 	for (int i = 0; i < lessons.size(); i++)
@@ -19,13 +19,17 @@ int GenerateHash(const vector<Lesson*>& lessons) {
 		ss << lessons[i]->getId();
 	}
 
-	int temp;
-	ss >> temp;
-	return temp;
+
+	return ss.str();
 }
 
 
-bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<int>& hashes) {
+bool operator==(const Location& lhs, const Location& rhs)
+{
+	
+	return (lhs.building.compare(rhs.building) == 0 && lhs.level.compare(rhs.level) == 0 && lhs.room.compare(rhs.room) == 0) ? true : false;
+}
+bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<string>& hashes) {
 	// 1. Beolvassa adott streamet végjelig
 	// 2. Ha még nem volt ilyen tárgy létrehozza az output-ra
 	//	  Ha már volt akkor hozzáad egy countot és/vagy specific timeot
@@ -50,7 +54,7 @@ bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<int>& hash
 
 		for (int i = 0; i < lessons.size(); i++)
 		{
-			if (lessons[i]->getName().compare(name)==0)
+			if (lessons[i]->getName().compare(name)==0&&location==lessons[i]->getLocation())
 			{
 				alreadyAdded = true;
 				lessons[i]->addCountPerWeek(numberPerWeek);
@@ -94,26 +98,26 @@ bool GenerateTimetable(const vector<Lesson*>& standard, const vector<Lesson*>& s
 	for (int i = 0; i < days; i++)
 	{
 		vector<Lesson*> temp;
-		int importantSlot=-1;
+		int importantSlot = -1;
 		Lesson* importatntlesson = nullptr;
 		for (int j = 0; j < special.size(); j++)
 		{
 			for (int k = 0; k < special[j]->getSpecificTimes().size(); k++)
 			{
-				if (special[j]->getSpecificTimes()[k].Day==i)
+				if (special[j]->getSpecificTimes()[k].Day == i)
 				{
 					importantSlot = special[j]->getSpecificTimes()[k].Slot;
 					importatntlesson = special[j];
 				}
 			}
 		}
-		for (int j= 0; j < timeslots; j++)
+		for (int j = 0; j < timeslots; j++)
 		{
-			if (importantSlot!=j)
+			if (importantSlot != j)
 			{
 				for (int k = 0; k < standard.size(); k++)
 				{
-					if (standard[k]->getCountPerWeek()> standard[k]->getHeldPerWeek())
+					if (standard[k]->getCountPerWeek() > standard[k]->getHeldPerWeek())
 					{
 						temp.push_back(standard[k]);
 						standard[k]->incrementHeldPerWeek();
@@ -123,7 +127,7 @@ bool GenerateTimetable(const vector<Lesson*>& standard, const vector<Lesson*>& s
 			}
 			else
 			{
-				if (importatntlesson->getCountPerWeek()>importatntlesson->getHeldPerWeek())
+				if (importatntlesson->getCountPerWeek() > importatntlesson->getHeldPerWeek())
 				{
 					temp.push_back(importatntlesson);
 					importatntlesson->incrementHeldPerWeek();
@@ -137,32 +141,22 @@ bool GenerateTimetable(const vector<Lesson*>& standard, const vector<Lesson*>& s
 }
 
 
-void RandomizeOrder(vector<Lesson*>& standard, vector<Lesson*>& special, vector<int>& hashes) {
-	// Megcserél egy tetszõleges elemet egy tetszõlegssel ami nem önamaga
-	// Megnézi hogy van-e ilyen a hashes-be ha igen ismétli amíg nem talál új hash-t
-	std::vector<int>::iterator it = std::find(hashes.begin(), hashes.end(), 453);
-	if (it != hashes.end())
-		std::cout << "Element Found" << std::endl;
-	else
-		std::cout << "Element Not Found" << std::endl;
-	/*do
+bool nextVariation(vector<Lesson*>& standard, int& i, int& j) {
+	if (j == standard.size()-1)
 	{
-		from = rand() % standard.size();
-		to = rand() % standard.size();
+		swap(standard[i], standard[j]);
+		i++;
+		return true;
+	}
+	else
+	{
+		swap(standard[i], standard[j]);
+		i++;
+		j++;
+		return false;
+	}
 
-		stringstream ss;
-		for (int i = 0; i < standard.size(); i++)
-		{
-			ss << standard[i]->getId();
-		}
-		for (int i = 0; i < special.size(); i++)
-		{
-			ss << special[i]->getId();
-		}
-		int temp;
-		ss >> hash;
-		it = find(hashes.begin(), hashes.end(), hash);
-	} while (from != to || it != hashes.end());*/
+
 }
 
 void SplitLessonsToStdAndSpec(const vector<Lesson*>& input, vector<Lesson*>& standardLessons, vector<Lesson*>& specialLessons) {
@@ -175,6 +169,13 @@ void SplitLessonsToStdAndSpec(const vector<Lesson*>& input, vector<Lesson*>& sta
 		else
 		{
 			specialLessons.push_back(input[i]);
-		}	
+		}
+	}
+}
+
+void resetHeldLessons(vector <Lesson*>& lessons){
+	for (int i = 0; i < lessons.size(); i++)
+	{
+		lessons[i]->resetHeldPerWeek();
 	}
 }
