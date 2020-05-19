@@ -24,8 +24,17 @@ int main() {
 		dayOne.push_back(new Laboratory("Fizika", "F", "1", "201", 5));
 		v1.addDay(dayOne);
 		v1.print(cout);
+
+
 		vector<Lesson*> temp;
 		ReadLessons("demo.txt", temp);
+		vector<Lesson*> standard;
+		vector<Lesson*> special;
+		vector<int> hashes;
+		SplitLessonsToStdAndSpec(temp, standard, special); //TO-DO bele kéne rakni a beolvasáshoz is
+		GenerateHash(standard, special, hashes); //TO-DO bele kéne rakni a beolvasáshoz is
+
+		RandomizeOrder(standard, special, hashes);
 
 		//Temp ürítés
 		for (int i = 0; i < temp.size(); i++)

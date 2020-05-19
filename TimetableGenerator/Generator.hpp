@@ -74,28 +74,65 @@ bool GenerateTimetable(const vector<Lesson*>& standard, const vector<Lesson*>& s
 	// 1.2 Elkezdi feltölteni standard elemekkel amíg a temp listába nem fut idõ szerint bele
 	//	   Ha belefut beteszi a spéci elemet és folytatja tovább
 	// 1.3 Végén hozzáadja az outputhoz a temp vector <lesson-t>
+
+
 	return true;
 }
 
-void GenerateHash(const vector<Lesson*>& standard, vector<int>& hashes) {
+void GenerateHash(const vector<Lesson*>& standardLessons, const vector<Lesson*>& specialLessons, vector<int>& hashes) {
 	// Hozzáadja karakteresen az ID értékét egy inthez és azt pusholja a hashes-be
+	stringstream ss;
+	for (int i = 0; i < standardLessons.size(); i++)
+	{
+		ss<<standardLessons[i]->getId();
+	}
+	for (int i = 0; i < specialLessons.size(); i++)
+	{
+		ss << specialLessons[i]->getId();
+	}
+	int temp;
+	ss >> temp;
+	hashes.push_back(temp);
 }
 
-void RandomizeOrder(vector<Lesson*>& standard, vector<Lesson*>& special, const vector<int>& hashes) {
+void RandomizeOrder(vector<Lesson*>& standard, vector<Lesson*>& special, vector<int>& hashes) {
 	// Megcserél egy tetszõleges elemet egy tetszõlegssel ami nem önamaga
 	// Megnézi hogy van-e ilyen a hashes-be ha igen ismétli amíg nem talál új hash-t
+	std::vector<int>::iterator it = std::find(hashes.begin(), hashes.end(), 453);
+	if (it != hashes.end())
+		std::cout << "Element Found" << std::endl;
+	else
+		std::cout << "Element Not Found" << std::endl;
+	/*do
+	{
+		from = rand() % standard.size();
+		to = rand() % standard.size();
+
+		stringstream ss;
+		for (int i = 0; i < standard.size(); i++)
+		{
+			ss << standard[i]->getId();
+		}
+		for (int i = 0; i < special.size(); i++)
+		{
+			ss << special[i]->getId();
+		}
+		int temp;
+		ss >> hash;
+		it = find(hashes.begin(), hashes.end(), hash);
+	} while (from != to || it != hashes.end());*/
 }
 
-void SplitLessonsToStdAndSpec(vector<Lesson*>& input, vector<Lesson*>& standardLessons, vector<Lesson*>& specialLessons) {
+void SplitLessonsToStdAndSpec(const vector<Lesson*>& input, vector<Lesson*>& standardLessons, vector<Lesson*>& specialLessons) {
 	// Szétválogatni az idõ limites órákat
 	for (int i = 0; i < input.size(); i++)
 	{
 		if (input[i]->getSpecificTimes().size() == 0) {
-			specialLessons.push_back(input[i]);
+			standardLessons.push_back(input[i]);
 		}
 		else
 		{
-			standardLessons.push_back(input[i]);
+			specialLessons.push_back(input[i]);
 		}	
 	}
 }
