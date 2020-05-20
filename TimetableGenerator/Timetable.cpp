@@ -35,7 +35,15 @@ void Timetable::print(ostream& os)
 		os << slot+1 << ".\t";
 		for (int day = 0; day < daysPerWeek; day++)
 		{
-			os << Lessons[day][slot]->getLongName()<<"\t\t\t";
+			if (Lessons[day][slot]->getName().compare("Break")==0)
+			{
+				os << Lessons[day][slot]->getName() << "\t\t\t\t";
+
+			}
+			else
+			{
+				os << Lessons[day][slot]->getLongName() << "\t\t\t";
+			}
 		}
 		os << endl;
 	}

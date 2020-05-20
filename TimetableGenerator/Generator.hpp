@@ -23,19 +23,39 @@ string GenerateHash(const vector<Lesson*>& lessons) {
 	return ss.str();
 }
 
-
 bool operator==(const Location& lhs, const Location& rhs)
 {
 	
 	return (lhs.building.compare(rhs.building) == 0 && lhs.level.compare(rhs.level) == 0 && lhs.room.compare(rhs.room) == 0) ? true : false;
 }
-bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<string>& hashes) {
+
+void SplitLessonsToStdAndSpec(const vector<Lesson*>& input, vector<Lesson*>& standardLessons, vector<Lesson*>& specialLessons) {
+	// Szétválogatni az idõ limites órákat
+	for (int i = 0; i < input.size(); i++)
+	{
+		if (input[i]->getSpecificTimes().size() == 0) {
+			standardLessons.push_back(input[i]);
+		}
+		else
+		{
+			specialLessons.push_back(input[i]);
+		}
+	}
+}
+
+
+bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<string>& hashes, int& days, int& slots, vector<Lesson*>& standardLessons, vector<Lesson*>& specialLessons) {
 	// 1. Beolvassa adott streamet végjelig
 	// 2. Ha még nem volt ilyen tárgy létrehozza az output-ra
 	//	  Ha már volt akkor hozzáad egy countot és/vagy specific timeot
 	// Minta: Típus(practice, laboratory, lecture) Név Épület Emelet Terem Oraszam
 	ifstream fs(file);
 	string line;
+	int totalLessonsCount= 0;
+
+	getline(fs, line); // TO-DO ha tudja
+	istringstream iss(line);
+	bool count = !(iss >> days >> slots);
 
 	while (getline(fs, line))
 	{
@@ -58,12 +78,14 @@ bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<string>& h
 			{
 				alreadyAdded = true;
 				lessons[i]->addCountPerWeek(numberPerWeek);
+				totalLessonsCount += numberPerWeek;
 				if (!extraFail) { lessons[i]->addSpecificTime(special); } // TO-DO temp=nullptr csere
 				break; //TO-DO: While-al ki lehetne váltani
 			}
 		}
 
 		if (!alreadyAdded) {
+			totalLessonsCount += numberPerWeek;
 			switch (type)
 			{
 			case practice:
@@ -83,7 +105,15 @@ bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<string>& h
 			lessons.push_back(temp);
 		}
 	}
+	for (int i = 0; i < (days*slots)-totalLessonsCount; i++)
+	{
+		Lesson* temp = new Lecture("Break", "", "", "", 1);
+		lessons.push_back(temp);
+	}
+
 	hashes.push_back(GenerateHash(lessons));
+
+	SplitLessonsToStdAndSpec(lessons, standardLessons, specialLessons); //TO-DO bele kéne rakni a beolvasáshoz is
 
 	return true;
 }
@@ -142,6 +172,7 @@ bool GenerateTimetable(const vector<Lesson*>& standard, const vector<Lesson*>& s
 
 
 bool nextVariation(vector<Lesson*>& standard, int& i, int& j) {
+
 	if (j == standard.size()-1)
 	{
 		swap(standard[i], standard[j]);
@@ -157,20 +188,6 @@ bool nextVariation(vector<Lesson*>& standard, int& i, int& j) {
 	}
 
 
-}
-
-void SplitLessonsToStdAndSpec(const vector<Lesson*>& input, vector<Lesson*>& standardLessons, vector<Lesson*>& specialLessons) {
-	// Szétválogatni az idõ limites órákat
-	for (int i = 0; i < input.size(); i++)
-	{
-		if (input[i]->getSpecificTimes().size() == 0) {
-			standardLessons.push_back(input[i]);
-		}
-		else
-		{
-			specialLessons.push_back(input[i]);
-		}
-	}
 }
 
 void resetHeldLessons(vector <Lesson*>& lessons){

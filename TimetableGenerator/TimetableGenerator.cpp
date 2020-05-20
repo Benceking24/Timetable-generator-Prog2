@@ -16,23 +16,22 @@
 //Kikötések: - egy konkrét bejegyzés csak egyszer lehet fix idõpontos
 //			 - egy nap csak egy fix idõpontos elem lehet
 //TO-DO: Üres elemek
+//TO-DO: ha nincs fájl, ha üres a fájl, ha sok az adat, ha kevés az adat, ha rossz az adat
 
 using namespace std;
 
 int main() {
 	{
-		int i = 0;
-		int j = 1;
-		vector<Lesson*> Lessons;
+		
+		int days, slots;
+		vector<Lesson*> Lessons, standardLessons, specialLessons;
 		vector<string> hashes;
-		ReadLessons("demo.txt", Lessons, hashes);
-		vector<Lesson*> standardLessons;
-		vector<Lesson*> specialLessons;
-		SplitLessonsToStdAndSpec(Lessons, standardLessons, specialLessons); //TO-DO bele kéne rakni a beolvasáshoz is
-
+		ReadLessons("demo.txt", Lessons, hashes, days, slots, standardLessons, specialLessons);
 
 		bool variations = false;
 		bool first = true;
+		int i = 0;
+		int j = 1;
 		do
 		{
 			vector<Lesson*> tempStandardLessons = standardLessons;
@@ -42,10 +41,14 @@ int main() {
 			}
 			else
 			{
+				if (i == 0 && j > tempStandardLessons.size()-1)
+				{
+					break;
+				}
 				variations = nextVariation(tempStandardLessons, i, j);
 			}
-			Timetable variation = Timetable(5, 5);
-			GenerateTimetable(tempStandardLessons, specialLessons, variation, 5, 5);
+			Timetable variation = Timetable(days, slots);
+			GenerateTimetable(tempStandardLessons, specialLessons, variation, days, slots);
 			cout << "ID of timetable: "<<GenerateHash(tempStandardLessons) <<endl;
 			variation.print(cout);
 			cout << endl;
