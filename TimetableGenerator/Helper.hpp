@@ -23,7 +23,7 @@ struct TimeSlot {
 	int Slot;
 };
 
-static string AcadaemicRankByName(int rank) {
+static string AcadaemicRankByName(const int rank) {
 	switch (rank)
 	{
 	case AssistantLecturer:
@@ -41,7 +41,7 @@ static string AcadaemicRankByName(int rank) {
 	return nullptr;
 }
 
-static string DaysOfWeek(int nthDay) {
+static string DaysOfWeek(const int nthDay) {
 	switch (nthDay)
 	{
 	case Monday:
@@ -71,7 +71,7 @@ static string DaysOfWeek(int nthDay) {
 	return nullptr;
 }
 
-static const char* LocationToString(string& output, Location location){ //TO-DO: Location reference would be better
+static const char* LocationToString(string& output, const Location& location){
 	stringstream ss;
 	ss << "Building: " << location.building << " Level: " << location.level << " Room: " << location.room;
 	output = ss.str();

@@ -33,15 +33,14 @@ vector<TimeSlot> Lesson::getSpecificTimes() const
 	return specificTimes;
 }
 
-bool Lesson::addSpecificTime(const TimeSlot& time)
+void Lesson::addSpecificTime(const TimeSlot& time)
 {
 	specificTimes.push_back(time);
-	return true; //TO-DO Exception handling
 }
 
-void Lesson::addCountPerWeek(int amount) { countPerWeek += amount; }
+void Lesson::addCountPerWeek(const int amount) { countPerWeek += amount; }
 
-bool Lesson::incrementHeldPerWeek() { //TO-DO Exception handling 
+bool Lesson::incrementHeldPerWeek() {
 	if (heldPerWeek < countPerWeek) {
 		heldPerWeek ++;
 		return true;
@@ -64,7 +63,7 @@ void Lecture::print(ostream& os)
 
 Practice::Practice(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification) :Lesson(Name, Building, Level, Room, CountPerWeek, MinQualification) {}
 
-void Practice::print(ostream& os)
+void Practice::print(ostream& os) 
 {
 	string temp;
 	os << "Practice:\tId: " << getId() << "\t Name: " << getName() << "\t Location: " << LocationToString(temp, getLocation()) << "\t Minimum Qualification: " << AcadaemicRankByName(getMinQualification()) << "\t Count per week: " << getCountPerWeek() << "\t Held per week: " << getHeldPerWeek() << endl;
@@ -72,7 +71,7 @@ void Practice::print(ostream& os)
 
 Laboratory::Laboratory(const string& Name, const string& Building, const string& Level, const string& Room, const unsigned int CountPerWeek, const int MinQualification) :Lesson(Name, Building, Level, Room, CountPerWeek, MinQualification) {}
 
-void Laboratory::print(ostream& os)
+void Laboratory::print(ostream& os) 
 {
 	string temp;
 	os << "Laboratory:\tId: " << getId() << "\t Name: " << getName() << "\t Location: " << LocationToString(temp, getLocation()) << "\t Minimum Qualification: " << AcadaemicRankByName(getMinQualification()) << "\t\t Count per week: " << getCountPerWeek() << "\t Held per week: " << getHeldPerWeek() << endl;

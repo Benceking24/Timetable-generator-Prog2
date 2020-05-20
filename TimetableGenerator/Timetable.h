@@ -24,8 +24,8 @@ public:
 	const int getDaysPerWeek() const;
 	const int getLessonsPerDay() const;
 	string getHash() const;
-	bool addDay(vector<Lesson*>& day); //TO-DO Exception handling és const?
+	void addDay(const vector<Lesson*>& day);
 	bool setHash(const string& Hash);
-	void print(ostream& os, const int width = 20);
+	void print(ostream& os, const int width = 20) const;
 };
 

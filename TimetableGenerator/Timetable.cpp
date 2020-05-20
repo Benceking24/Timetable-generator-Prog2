@@ -18,10 +18,9 @@ string Timetable::getHash() const
 	return hash;
 }
 
-bool Timetable::addDay(vector<Lesson*>& day)
+void Timetable::addDay(const vector<Lesson*>& day)
 {
 	Lessons.push_back(day);
-	return true;
 }
 
 bool Timetable::setHash(const string& Hash)
@@ -30,7 +29,7 @@ bool Timetable::setHash(const string& Hash)
 	return true;
 }
 
-void Timetable::print(ostream& os, const int width)
+void Timetable::print(ostream& os, const int width) const
 {
 	//Header
 	os << "\t";

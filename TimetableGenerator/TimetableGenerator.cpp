@@ -1,27 +1,29 @@
 #define _CRTDBG_MAP_ALLOC
+#pragma once
 #include <stdlib.h>
 #include <crtdbg.h>
 #include "Helper.hpp"
 #include "Generator.hpp"
-#include "Scholar.h"
 #include "Lesson.h"
 #include "Timetable.h"
-
-//TO-DO: Intelisense comments
-//Kikötések: - egy konkrét bejegyzés csak egyszer lehet fix idõpontos
-//			 - egy nap csak egy fix idõpontos elem lehet
-//TO-DO: Üres elemek
-//TO-DO: ha nincs fájl, ha üres a fájl, ha sok az adat, ha kevés az adat, ha rossz az adat
 
 using namespace std;
 
 int main() {
 	{
-		
 		int days, slots;
 		vector<Lesson*> Lessons, standardLessons, specialLessons;
 		vector<string> hashes;
-		ReadLessons("demo.txt", Lessons, hashes, days, slots, standardLessons, specialLessons);
+		try
+		{
+			ReadLessons("demo.txt", Lessons, hashes, days, slots, standardLessons, specialLessons);
+		}
+		catch (const std::runtime_error& error)
+		{
+			cout << error.what();
+			return 1;
+		}
+
 		vector<Timetable*> timetables;
 		bool variations = false;
 		bool first = true;
@@ -44,7 +46,15 @@ int main() {
 				variations = nextVariation(tempStandardLessons, i, j);
 			}
 			Timetable* variation = new Timetable(days, slots);
-			GenerateTimetable(tempStandardLessons, specialLessons, *variation, days, slots);
+			try
+			{
+				GenerateTimetable(tempStandardLessons, specialLessons, *variation, days, slots);
+			}
+			catch (const std::range_error& error)
+			{
+				cout << error.what();
+				return 1;
+			}
 			variation->setHash(GenerateHash(tempStandardLessons));
 			timetables.push_back(variation);
 			resetHeldLessons(Lessons);
@@ -102,6 +112,6 @@ int main() {
 		specialLessons.clear();
 		Lessons.clear();
 	}
-	_CrtDumpMemoryLeaks(); //Memory leak
+	_CrtDumpMemoryLeaks();
 	return 0;
 }

@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Lesson">
+    <Position X="2.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>Rw4AAAAAAAAAAAAEAAAQCQAiAAAEAAABEABEAAAACgE=</HashCode>
+      <FileName>Lesson.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Lecture">
+    <Position X="1" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>Lesson.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Practice">
+    <Position X="2.75" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Lesson.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Laboratory">
+    <Position X="4.5" Y="7.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Lesson.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Timetable">
+    <Position X="4.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CgQACAAgAAAAAAACAQAAACEAgAIAAAAEAAAQAAAAAgA=</HashCode>
+      <FileName>Timetable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Location">
+    <Position X="6.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAQAAEAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helper.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="TimeSlot">
+    <Position X="6.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>Helper.hpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="LessonTypes">
+    <Position X="6.25" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAEAAAAAAAAAIAAAAgAAAAAAAAA=</HashCode>
+      <FileName>Helper.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="AcademicRank">
+    <Position X="6.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAAAAAAAAAAAACAAEAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helper.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="DaysOfWeek">
+    <Position X="6.25" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAIAACAAAAAAAAAAACAAIACAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helper.hpp</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

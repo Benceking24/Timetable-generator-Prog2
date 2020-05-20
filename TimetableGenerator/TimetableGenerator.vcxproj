@@ -139,7 +139,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Lesson.cpp" />
-    <ClCompile Include="Scholar.cpp" />
     <ClCompile Include="Timetable.cpp" />
     <ClCompile Include="TimetableGenerator.cpp" />
   </ItemGroup>
@@ -147,8 +146,10 @@
     <ClInclude Include="Generator.hpp" />
     <ClInclude Include="Helper.hpp" />
     <ClInclude Include="Lesson.h" />
-    <ClInclude Include="Scholar.h" />
     <ClInclude Include="Timetable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

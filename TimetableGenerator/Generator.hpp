@@ -4,15 +4,13 @@
 #include <sstream>
 #include <string>
 #include <fstream>
+#include <stdexcept>
 #include "Lesson.h"
 #include "Timetable.h"
 
 using namespace std;
-//Ora nev, max ora szam				-standard
-//Ora nev, max ora szam, idopont	-special
 
 string GenerateHash(const vector<Lesson*>& lessons) {
-	// Hozzáadja karakteresen az ID értékét egy inthez és azt pusholja a hashes-be
 	stringstream ss;
 	for (int i = 0; i < lessons.size(); i++)
 	{
@@ -30,7 +28,6 @@ bool operator==(const Location& lhs, const Location& rhs)
 }
 
 void SplitLessonsToStdAndSpec(const vector<Lesson*>& input, vector<Lesson*>& standardLessons, vector<Lesson*>& specialLessons) {
-	// Szétválogatni az idõ limites órákat
 	for (int i = 0; i < input.size(); i++)
 	{
 		if (input[i]->getSpecificTimes().size() == 0) {
@@ -44,18 +41,22 @@ void SplitLessonsToStdAndSpec(const vector<Lesson*>& input, vector<Lesson*>& sta
 }
 
 
-bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<string>& hashes, int& days, int& slots, vector<Lesson*>& standardLessons, vector<Lesson*>& specialLessons) {
-	// 1. Beolvassa adott streamet végjelig
-	// 2. Ha még nem volt ilyen tárgy létrehozza az output-ra
-	//	  Ha már volt akkor hozzáad egy countot és/vagy specific timeot
-	// Minta: Típus(practice, laboratory, lecture) Név Épület Emelet Terem Oraszam
+void ReadLessons(const string& file, vector<Lesson*>& lessons, vector<string>& hashes, int& days, int& slots, vector<Lesson*>& standardLessons, vector<Lesson*>& specialLessons) {
 	ifstream fs(file);
+	if (!fs.is_open())
+	{
+		throw runtime_error("Can't open file");
+	}
 	string line;
 	int totalLessonsCount= 0;
 
-	getline(fs, line); // TO-DO ha tudja
+	getline(fs, line);
 	istringstream iss(line);
 	bool count = !(iss >> days >> slots);
+	if (count)
+	{
+		throw runtime_error("Bad input on first line of file");
+	}
 
 	while (getline(fs, line))
 	{
@@ -67,11 +68,17 @@ bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<string>& h
 		Lesson* temp = nullptr;
 
 		bool fail = !(iss >> type >> name >> location.building >>location.level >> location.room >> numberPerWeek);
-		bool extraFail = !(iss >> special.Day >> special.Slot);
+		bool specificTimeDescribed = !(iss >> special.Day >> special.Slot);
 		bool alreadyAdded = false;
 
-		if (fail) { break; } // TO-DO: Exception handling
-
+		if (fail)
+		{
+			throw runtime_error("Bad input at lesson description");
+		}
+		if (special.Day<0||special.Day>days-1||special.Slot<0||special.Slot>slots-1)
+		{
+			throw runtime_error("Bad input at specific time description. Overindexed time");
+		}
 		for (int i = 0; i < lessons.size(); i++)
 		{
 			if (lessons[i]->getName().compare(name)==0&&location==lessons[i]->getLocation())
@@ -79,8 +86,8 @@ bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<string>& h
 				alreadyAdded = true;
 				lessons[i]->addCountPerWeek(numberPerWeek);
 				totalLessonsCount += numberPerWeek;
-				if (!extraFail) { lessons[i]->addSpecificTime(special); } // TO-DO temp=nullptr csere
-				break; //TO-DO: While-al ki lehetne váltani
+				if (!specificTimeDescribed) { lessons[i]->addSpecificTime(special); }
+				break;
 			}
 		}
 
@@ -89,19 +96,19 @@ bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<string>& h
 			switch (type)
 			{
 			case practice:
-				temp = new Practice(name, location.building, location.level, location.room, numberPerWeek); // TO-DO TÖRLÉS?
+				temp = new Practice(name, location.building, location.level, location.room, numberPerWeek); 
 				break;
 			case laboratory:
-				temp = new Laboratory(name, location.building, location.level, location.room, numberPerWeek); // TO-DO TÖRLÉS?
+				temp = new Laboratory(name, location.building, location.level, location.room, numberPerWeek); 
 				break;
 			case lecture:
-				temp = new Lecture(name, location.building, location.level, location.room, numberPerWeek); // TO-DO TÖRLÉS?
+				temp = new Lecture(name, location.building, location.level, location.room, numberPerWeek);
 				break;
 			default:
 				break;
 			}
 
-			if (!extraFail) { temp->addSpecificTime(special); } // TO-DO temp=nullptr csere
+			if (!specificTimeDescribed) { temp->addSpecificTime(special); }
 			lessons.push_back(temp);
 		}
 	}
@@ -113,18 +120,11 @@ bool ReadLessons(const string& file, vector<Lesson*>& lessons, vector<string>& h
 
 	hashes.push_back(GenerateHash(lessons));
 
-	SplitLessonsToStdAndSpec(lessons, standardLessons, specialLessons); //TO-DO bele kéne rakni a beolvasáshoz is
+	SplitLessonsToStdAndSpec(lessons, standardLessons, specialLessons); 
 
-	return true;
 }
 
-bool GenerateTimetable(const vector<Lesson*>& standard, const vector<Lesson*>& special, Timetable& output, int days, int timeslots) {
-	// 1. Ciklus minden napra egy temp vector<lesson> be
-	// 1.1 Megnézi van-e arra a napra speciális, ha igen azt jelzi egy !ÚJ! temp listába
-	// 1.2 Elkezdi feltölteni standard elemekkel amíg a temp listába nem fut idõ szerint bele
-	//	   Ha belefut beteszi a spéci elemet és folytatja tovább
-	// 1.3 Végén hozzáadja az outputhoz a temp vector <lesson-t>
-
+bool GenerateTimetable(const vector<Lesson*>& standard, const vector<Lesson*>& special, Timetable& output, const int days, const int timeslots) {
 	for (int i = 0; i < days; i++)
 	{
 		vector<Lesson*> temp;
@@ -150,7 +150,10 @@ bool GenerateTimetable(const vector<Lesson*>& standard, const vector<Lesson*>& s
 					if (standard[k]->getCountPerWeek() > standard[k]->getHeldPerWeek())
 					{
 						temp.push_back(standard[k]);
-						standard[k]->incrementHeldPerWeek();
+						if (!(standard[k]->incrementHeldPerWeek()))
+						{
+							throw range_error("More lessons held than it should be");
+						}
 						break;
 					}
 				}
