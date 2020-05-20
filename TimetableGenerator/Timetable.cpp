@@ -1,6 +1,6 @@
 #include "Timetable.h"
 
-Timetable::Timetable(const int Days, const int Lessons):id(NextTimetableId), daysPerWeek(Days), lessonsPerDay(Lessons) {NextTimetableId++;}
+Timetable::Timetable(const int Days, const int Lessons):id(NextTimetableId), daysPerWeek(Days), lessonsPerDay(Lessons), hash("") {NextTimetableId++;}
 
 Timetable::~Timetable()
 {
@@ -13,19 +13,31 @@ const int Timetable::getDaysPerWeek() const {return daysPerWeek;}
 
 const int Timetable::getLessonsPerDay() const {return lessonsPerDay;}
 
+string Timetable::getHash() const
+{
+	return hash;
+}
+
 bool Timetable::addDay(vector<Lesson*>& day)
 {
 	Lessons.push_back(day);
 	return true;
 }
 
-void Timetable::print(ostream& os)
+bool Timetable::setHash(const string& Hash)
+{
+	hash = Hash;
+	return true;
+}
+
+void Timetable::print(ostream& os, const int width)
 {
 	//Header
 	os << "\t";
 	for (int day = 0; day < daysPerWeek; day++)
 	{
-		os << DaysOfWeek(day) << "\t\t\t\t";
+		os << setw(width);
+		os << DaysOfWeek(day) << "\t";
 	}
 	os << endl;
 
@@ -37,12 +49,14 @@ void Timetable::print(ostream& os)
 		{
 			if (Lessons[day][slot]->getName().compare("Break")==0)
 			{
-				os << Lessons[day][slot]->getName() << "\t\t\t\t";
+				os << setw(width);
+				os << Lessons[day][slot]->getName() << "\t";
 
 			}
 			else
 			{
-				os << Lessons[day][slot]->getLongName() << "\t\t\t";
+				os << setw(width);
+				os << Lessons[day][slot]->getLongName() << "\t";
 			}
 		}
 		os << endl;

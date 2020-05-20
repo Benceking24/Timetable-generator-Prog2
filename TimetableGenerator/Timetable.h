@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <iomanip>
 #include "Helper.hpp"
 #include "Lesson.h"
 
@@ -15,13 +16,16 @@ private:
 	const int daysPerWeek;
 	const int lessonsPerDay;
 	vector<vector<Lesson*>> Lessons;
+	string hash;
 public:
 	Timetable(const int Days, const int Lessons);
 	~Timetable();
 	const unsigned int getId() const;
 	const int getDaysPerWeek() const;
 	const int getLessonsPerDay() const;
-	bool addDay(vector<Lesson*>& day); //TO-DO Exception handling
-	void print(ostream& os);
+	string getHash() const;
+	bool addDay(vector<Lesson*>& day); //TO-DO Exception handling és const?
+	bool setHash(const string& Hash);
+	void print(ostream& os, const int width = 20);
 };
 
